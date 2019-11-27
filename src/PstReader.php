@@ -42,7 +42,7 @@ class PstReader
 
     /**
      * @param string $sourcePstFilePath
-     * @return object
+     * @return $this
      * @throws \Exception
      */
     public function setSourcePstFilePath(string $sourcePstFilePath): object
