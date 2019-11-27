@@ -1,0 +1,19 @@
+{
+  "name": "cronox/php-pst-files-reader",
+  "description": "PHP PST files based on `readpst` command",
+  "license": "MIT",
+  "require": {
+    "php": ">=7.1",
+    "php-mime-mail-parser/php-mime-mail-parser": "^5.0"
+  },
+  "require-dev": {},
+  "autoload": {
+    "psr-4": {
+      "Cronox\\PstReader\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {}
+  }
+}
+
