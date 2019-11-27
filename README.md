@@ -16,7 +16,7 @@ composer update
 
 or run
 ```sh
-composer require cronox/serial-php
+composer require cronox/php-pst-files-reader
 ```
 
 ## A Simple Example
