@@ -14,6 +14,7 @@ class PstReader
     protected $parsedEmails = [];
     protected $parsedAllEmails = [];
     protected $replaceUnpacked = false;
+    protected $utf8 = false;
 
     /**
      * PstReader constructor.
@@ -42,10 +43,10 @@ class PstReader
 
     /**
      * @param string $sourcePstFilePath
-     * @return $this
+     * @return PstReader
      * @throws \Exception
      */
-    public function setSourcePstFilePath(string $sourcePstFilePath): object
+    public function setSourcePstFilePath(string $sourcePstFilePath): PstReader
     {
         if (false === file_exists($sourcePstFilePath)) {
             throw new \Exception($sourcePstFilePath . ' not exists!');
@@ -65,10 +66,10 @@ class PstReader
 
     /**
      * @param string $destinationPstDirPath
-     * @return $this
+     * @return PstReader
      * @throws \Exception
      */
-    public function setDestinationPstDirPath(string $destinationPstDirPath): object
+    public function setDestinationPstDirPath(string $destinationPstDirPath): PstReader
     {
         $isDir = is_dir($destinationPstDirPath);
         if (false === $isDir) {
@@ -91,24 +92,25 @@ class PstReader
 
     /**
      * @param bool $replaceUnpacked
-     * @return $this
+     * @return PstReader
      */
-    public function setReplaceUnpacked(bool $replaceUnpacked): object
+    public function setReplaceUnpacked(bool $replaceUnpacked): PstReader
     {
         $this->replaceUnpacked = $replaceUnpacked;
         return $this;
     }
 
     /**
-     * @return $this
+     * @return PstReader
      * @throws \Exception
      */
-    public function unpackPstFile(): object
+    public function unpackPstFile(): PstReader
     {
         $sourcePstFilePath = $this->sourcePstFilePath;
         $destinationPstDirPath = $this->destinationPstDirPath;
 
-        $cmd = sprintf('%sreadpst -8 -S -o "%s" "%s"',
+        $cmd = sprintf('%sreadpst %s-S -o "%s" "%s"',
+            (true === $this->utf8 ? '-8 ' : ''),
             (true === $this->replaceUnpacked ? sprintf('rm -r "%1$s" && mkdir -p "%1$s" && ', $destinationPstDirPath) : ''),
             $destinationPstDirPath,
             $sourcePstFilePath
@@ -245,6 +247,16 @@ class PstReader
     {
         ksort($this->parsedAllEmails);
         return $this->parsedAllEmails;
+    }
+
+    /**
+     * @param bool $utf8
+     * @return PstReader
+     */
+    public function setUtf8(bool $utf8): PstReader
+    {
+        $this->utf8 = $utf8;
+        return $this;
     }
 
 
