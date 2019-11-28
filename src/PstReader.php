@@ -110,8 +110,8 @@ class PstReader
         $destinationPstDirPath = $this->destinationPstDirPath;
 
         $cmd = sprintf('%sreadpst %s-S -o "%s" "%s"',
-            (true === $this->utf8 ? '-8 ' : ''),
             (true === $this->replaceUnpacked ? sprintf('rm -r "%1$s" && mkdir -p "%1$s" && ', $destinationPstDirPath) : ''),
+            (true === $this->utf8 ? '-8 ' : ''),
             $destinationPstDirPath,
             $sourcePstFilePath
         );
